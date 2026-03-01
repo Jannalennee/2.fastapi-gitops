@@ -1,7 +1,7 @@
 import os
 
 import uvicorn
-from fastapi import FastAPI
+from fastapi import Body, FastAPI
 from fastapi.responses import JSONResponse
 
 app = FastAPI(
@@ -49,5 +49,16 @@ async def get_item(item_id: int):
     }
 
 
+@app.post("/api/items")
+async def create_item(name: str = Body(...), description: str = Body(...)):
+    """Create a new item."""
+    return {
+        "id": 999,
+        "name": name,
+        "description": description,
+        "created": True,
+    }
+
+
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8000)
